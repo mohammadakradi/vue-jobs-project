@@ -1,5 +1,5 @@
 <script setup>
-import { reactive, onMounted } from 'vue';
+import { reactive, onMounted, watch } from 'vue';
 import axios from 'axios';
 import router from '@/router';
 import { useToast } from 'vue-toastification';
@@ -28,6 +28,28 @@ const state = reactive({
     job: {},
     isLoading: true
 })
+
+watch(
+    () => route.name,
+    (newRouteName) => {
+        if (newRouteName === 'add-job') {
+            resetForm();
+        }
+    }
+);
+
+const resetForm = () => {
+    viewTitle = 'Add Job';
+    form.type = 'Full-Time';
+    form.title = '';
+    form.description = '';
+    form.location = '';
+    form.salary = '';
+    form.company.name = '';
+    form.company.description = '';
+    form.company.contactEmail = '';
+    form.company.contactPhone = '';
+};
 
 const toast = useToast();
 
